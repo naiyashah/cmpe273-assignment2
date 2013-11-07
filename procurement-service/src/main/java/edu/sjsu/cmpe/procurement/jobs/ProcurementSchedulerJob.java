@@ -58,7 +58,7 @@ public class ProcurementSchedulerJob extends Job {
 	ProcurementSchedulerJob jobs = new ProcurementSchedulerJob();
 	try {
 		String lostBooks=jobs.Consumer();
-		System.out.println("*************lostbooks*************");
+		
 		
 		if(lostBooks != null)
 		{
@@ -160,7 +160,7 @@ public class ProcurementSchedulerJob extends Job {
     			for(int i=0;i<msg.size();i++)
     			{
     				JSONObject book = (JSONObject) msg.get(i);
-    				ar[i]=book.get("isbn")+":\""+book.get("title")+"\":"+book.get("category")+"\":"+book.get("coverimage");
+    				ar[i]=book.get("isbn")+":\""+book.get("title")+"\":\""+book.get("category")+"\":\""+book.get("coverimage")+"\"";
     				System.out.println(ar[i]);
     			}
     		}
@@ -265,7 +265,7 @@ public class ProcurementSchedulerJob extends Job {
         }
         connection.close();
     String lostbooks = isbns.toString();
-    System.out.println("Returnin books:"+lostbooks);
+    System.out.println(lostbooks);
     return lostbooks;
     }
 

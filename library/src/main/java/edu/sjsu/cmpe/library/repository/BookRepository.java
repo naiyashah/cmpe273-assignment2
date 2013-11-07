@@ -54,7 +54,7 @@ public class BookRepository implements BookRepositoryInterface {
      stompTopic = configuration.getStompTopicName();
      libraryName = configuration.getLibraryName();
      System.out.println(apolloUser);
-	isbnKey = 0;
+	//isbnKey = 0;
     }
     private ConcurrentHashMap<Long, Book> seedData(){
 	ConcurrentHashMap<Long, Book> bookMap = new ConcurrentHashMap<Long, Book>();
@@ -89,10 +89,10 @@ public class BookRepository implements BookRepositoryInterface {
      * 
      * @return a new incremental ISBN number
      */
-    private final Long generateISBNKey() {
+    /*private final Long generateISBNKey() {
 	// increment existing isbnKey and return the new value
 	return Long.valueOf(++isbnKey);
-    }
+    }*/
 
     /**
      * This will auto-generate unique ISBN for new books.
@@ -101,12 +101,12 @@ public class BookRepository implements BookRepositoryInterface {
     public Book saveBook(Book newBook) {
 	checkNotNull(newBook, "newBook instance must not be null");
 	// Generate new ISBN
-	Long isbn = generateISBNKey();
-	newBook.setIsbn(isbn);
+	//Long isbn = generateISBNKey();
+	//newBook.setIsbn(newBook.getIsbn());
 	// TODO: create and associate other fields such as author
 
 	// Finally, save the new book into the map
-	bookInMemoryMap.putIfAbsent(isbn, newBook);
+	bookInMemoryMap.putIfAbsent(newBook.getIsbn(), newBook);
 
 	return newBook;
     }

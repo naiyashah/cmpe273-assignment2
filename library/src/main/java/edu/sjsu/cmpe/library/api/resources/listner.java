@@ -70,23 +70,29 @@ public class listner {
 	     	    }
 	     	    if( topicmsg instanceof  TextMessage ) {
 	     		String body = ((TextMessage) topicmsg).getText();
+	     		System.out.println("Received message = " + body);
 	     		isbn = Long.parseLong(body.split(":")[0]);
-	     		title = body.split(":")[1];
-	     		category = body.split(":")[2];
-	     		coverimage= body.split(":")[3];
+	     		title = body.split(":")[1].toString();
+	     		category = body.split(":")[2].toString();
+	     		coverimage= body.split(":\"")[3].toString();
+	     		coverimage = coverimage.substring(0,coverimage.length()-1);
 	     		addbk = bookRepository.getBookByISBN(isbn);
-	     		if(addbk != null){
-	     		addbk.setIsbn(isbn);
-	     		addbk.setTitle(title);
-	     		addbk.setStatus(addbk.getStatus());
-	     		addbk.setCategory(category);
-	     		addbk.setCoverimage(new URL (coverimage));
-	     		bookRepository.saveBook(addbk);
-	     		
-	     		
+	     		if(addbk==null){
+	     			
+	     		Book book = new Book();
+	     		book.setIsbn(isbn);
+	     		book.setTitle(title);
+	     		book.setCategory(category);
+	     		book.setCoverimage(new URL (coverimage));
+	     		bookRepository.saveBook(book);
+	     		}
+	     		else
+	     		{
+	     			addbk.setStatus(Status.available);
+	     			bookRepository.saveBook(addbk);
 	     		}
 	     		
-	     		System.out.println("Received message = " + body);
+	     		
 
 	     	    } else if (topicmsg instanceof StompJmsMessage) {
 	     		StompJmsMessage smsg = ((StompJmsMessage) topicmsg);
